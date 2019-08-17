@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <string name="app_name">MieHaHa</string>
+  <string name="step_sensor_service_title">StepSensorService</string>
+  <string name="step_sensor_service_content">IsRunningForeground</string>
+
+  <string name="step_sensor_service_notification_channel_name">正在运行</string>
+</resources>
