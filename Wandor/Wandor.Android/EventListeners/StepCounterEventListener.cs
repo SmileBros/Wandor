@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using Android.Hardware;
 using Android.Runtime;
-using Wandor.Droid.Crosses;
+using Wandor.Services;
 
 namespace Wandor.Droid.EventListeners
 {
-    public class StepCounterEventListener : Java.Lang.Object, IStepCounter
+    public class StepCounterEventListener : Java.Lang.Object, ISensorEventListener, IStepService
     {
         private const int UninitializedCount = -1;
 
         private int _initStepCount = UninitializedCount;
-
-        public List<IStepCountEventPipe> Upstreams { get; } = new List<IStepCountEventPipe>();
 
         public int StepCount { get; set; }
 

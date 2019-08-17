@@ -75,11 +75,8 @@
   <ItemGroup>
     <Compile Include="Crosses\AndroidInitializer.cs" />
     <Compile Include="Activities\MainActivity.cs" />
-    <Compile Include="Crosses\IStepCountEventPipe.cs" />
-    <Compile Include="Crosses\IStepCountEventPipeExtension.cs" />
     <Compile Include="Crosses\StepSensorServiceBinder.cs" />
     <Compile Include="Crosses\StepSensorServiceConnection.cs" />
-    <Compile Include="Crosses\IStepCounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="EventListeners\StepCounterEventListener.cs" />

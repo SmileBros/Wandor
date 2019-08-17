@@ -2,27 +2,22 @@
 using System.Collections.Generic;
 using Android.Content;
 using Android.OS;
+using Wandor.Services;
 
 namespace Wandor.Droid.Crosses
 {
-    public class StepSensorServiceConnection : Java.Lang.Object, IServiceConnection, IStepCountEventPipe
+    public class StepSensorServiceConnection : Java.Lang.Object, IServiceConnection
     {
-        public List<IStepCountEventPipe> Upstreams { get; } = new List<IStepCountEventPipe>();
+        public IStepService StepCounter { get; set; }
 
         public void OnServiceConnected(ComponentName name, IBinder service) {
-            if (service is IStepCountEventPipe binder) {
-                this.PipeAfter(binder);
+            if (service is StepSensorServiceBinder binder) {
+                StepCounter = binder.StepService;
             }
         }
 
         public void OnServiceDisconnected(ComponentName name) {
-            this.Destroy();
+            StepCounter = null;
         }
-
-        public void OnStepCountChanged(object sender, int e) {
-            StepCountChanged?.Invoke(sender, e);
-        }
-
-        public event EventHandler<int> StepCountChanged;
     }
 }

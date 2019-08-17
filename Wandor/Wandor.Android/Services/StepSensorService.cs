@@ -7,6 +7,7 @@ using Android.Util;
 using Wandor.Droid.Activities;
 using Wandor.Droid.Crosses;
 using Wandor.Droid.EventListeners;
+using Wandor.Services;
 
 namespace Wandor.Droid.Services
 {
@@ -21,18 +22,17 @@ namespace Wandor.Droid.Services
         private SensorManager _sensorManager;
         private Sensor _stepCounterSensor;
         //private Sensor _stepDetectorSensor;
-        private IStepCounter _stepCounterSensorEventListener;
+        private StepCounterEventListener _stepCounterSensorEventListener;
         //private StepDetectorEventListener _stepDetectorSensorEventListener;
         private StepSensorServiceBinder _binder;
 
         public override IBinder OnBind(Intent intent) {
             Log.Info(TAG, "OnBind");
 
-            if (_binder != null) {
-                _binder.Destroy();
-            }
-            _binder = new StepSensorServiceBinder();
-            _binder.PipeAfter(_stepCounterSensorEventListener);
+            _binder = new StepSensorServiceBinder() {
+                StepService = _stepCounterSensorEventListener
+            };
+
             return _binder;
         }
 

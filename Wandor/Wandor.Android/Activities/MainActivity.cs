@@ -36,7 +36,7 @@ namespace Wandor.Droid.Activities
             }
 
             _initializer = new AndroidInitializer {
-                StepService = _connection
+                StepService = _connection.StepCounter
             };
         }
 

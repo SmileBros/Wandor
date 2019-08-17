@@ -57,7 +57,7 @@ namespace Wandor
         protected override async void OnInitialized() {
             InitializeComponent();
 
-            var result = await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("NavigationPage/MainPage");
         }
     }
 }
