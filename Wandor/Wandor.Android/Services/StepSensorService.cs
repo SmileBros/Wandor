@@ -4,7 +4,6 @@ using Android.Hardware;
 using Android.OS;
 using Android.Runtime;
 using Android.Util;
-using Wandor.Droid.Activities;
 using Wandor.Droid.Crosses;
 using Wandor.Droid.EventListeners;
 
