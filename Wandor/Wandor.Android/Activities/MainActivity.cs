@@ -3,7 +3,6 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
-using Prism;
 using Wandor.Droid.Crosses;
 using Wandor.Droid.Services;
 using Xamarin.Forms;
@@ -15,7 +14,7 @@ namespace Wandor.Droid.Activities
     public class MainActivity : FormsAppCompatActivity
     {
         private bool _isStepSensorAvaliable;
-        private IPlatformInitializer _initializer;
+        private AndroidInitializer _initializer;
         private StepSensorServiceConnection _connection;
 
         protected override void OnCreate(Bundle savedInstanceState) {
@@ -31,12 +30,8 @@ namespace Wandor.Droid.Activities
         }
 
         private void Initialize() {
-            if (_connection == null) {
-                _connection = new StepSensorServiceConnection();
-            }
-
             _initializer = new AndroidInitializer {
-                StepService = _connection.StepCounter
+                StepService = new StepService(),
             };
         }
 
@@ -52,12 +47,9 @@ namespace Wandor.Droid.Activities
             }
         }
 
-        protected override void OnResume() {
-            base.OnResume();
-
-            if (_isStepSensorAvaliable) {
-                //StartStepSensorService();
-            }
+        protected override void OnStop() {
+            UnbindStepSensorService();
+            base.OnStop();
         }
 
         private Intent CreateStepSensorServiceIntent() {
@@ -65,24 +57,19 @@ namespace Wandor.Droid.Activities
         }
 
         private void BindStepSensorService() {
+            if (_connection == null) {
+                _connection = new StepSensorServiceConnection {
+                    StepService = _initializer.StepService,
+                };
+            }
             var intent = CreateStepSensorServiceIntent();
-
+            StartForegroundService(intent);
             BindService(intent, _connection, Bind.AutoCreate);
         }
 
         private void UnbindStepSensorService() {
             if (_connection != null) {
                 UnbindService(_connection);
-            }
-        }
-
-        private void StartStepSensorService() {
-            var intent = CreateStepSensorServiceIntent();
-
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.O) {
-                StartForegroundService(intent);
-            } else {
-                StartService(intent);
             }
         }
 

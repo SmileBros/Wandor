@@ -7,7 +7,6 @@ using Android.Util;
 using Wandor.Droid.Activities;
 using Wandor.Droid.Crosses;
 using Wandor.Droid.EventListeners;
-using Wandor.Services;
 
 namespace Wandor.Droid.Services
 {
@@ -34,6 +33,14 @@ namespace Wandor.Droid.Services
             };
 
             return _binder;
+        }
+
+        public override bool OnUnbind(Intent intent) {
+            return true;
+        }
+
+        public override void OnRebind(Intent intent) {
+            base.OnRebind(intent);
         }
 
         public override void OnCreate() {
@@ -63,12 +70,12 @@ namespace Wandor.Droid.Services
         private void StartAsForeground() {
             // Code not directly related to publishing the notification has been omitted for clarity.
             // Normally, this method would hold the code to be run when the service is started.
-            var intent = PendingIntent.GetActivity(this, 0, new Intent(this, typeof(MainActivity)), PendingIntentFlags.UpdateCurrent);
+            //var intent = PendingIntent.GetActivity(this, 0, new Intent(this, typeof(MainActivity)), PendingIntentFlags.UpdateCurrent);
             using (var notification = new Notification.Builder(this, ApplicationNotificationChannelId)
                 .SetContentTitle(Resources.GetString(Resource.String.step_sensor_service_title))
                 .SetContentText(Resources.GetString(Resource.String.step_sensor_service_content))
                 .SetSmallIcon(Resource.Drawable.xamarin_logo)
-                .SetContentIntent(intent)
+                //.SetContentIntent(intent)
                 .SetOngoing(true)
                 .Build()) {
                 //Enlist this instance of the service as a foreground service
