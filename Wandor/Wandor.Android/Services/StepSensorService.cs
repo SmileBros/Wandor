@@ -19,9 +19,7 @@ namespace Wandor.Droid.Services
 
         private SensorManager _sensorManager;
         private Sensor _stepCounterSensor;
-        //private Sensor _stepDetectorSensor;
         private StepCounterEventListener _stepCounterSensorEventListener;
-        //private StepDetectorEventListener _stepDetectorSensorEventListener;
         private StepSensorServiceBinder _binder;
 
         public override IBinder OnBind(Intent intent) {
@@ -48,8 +46,6 @@ namespace Wandor.Droid.Services
             _sensorManager = (SensorManager)GetSystemService(SensorService);
             _stepCounterSensor = _sensorManager.GetDefaultSensor(SensorType.StepCounter);//获取计步总数传感器
             _stepCounterSensorEventListener = new StepCounterEventListener();
-            //_stepDetectorSensor = _sensorManager.GetDefaultSensor(SensorType.StepDetector);//获取单次计步传感器
-            //_stepDetectorSensorEventListener = new StepDetectorEventListener();
 
             RegisterNotificationChannel();
             RegisterSensorEventListener();
@@ -69,12 +65,10 @@ namespace Wandor.Droid.Services
         private void StartAsForeground() {
             // Code not directly related to publishing the notification has been omitted for clarity.
             // Normally, this method would hold the code to be run when the service is started.
-            //var intent = PendingIntent.GetActivity(this, 0, new Intent(this, typeof(MainActivity)), PendingIntentFlags.UpdateCurrent);
             using (var notification = new Notification.Builder(this, ApplicationNotificationChannelId)
                 .SetContentTitle(Resources.GetString(Resource.String.step_sensor_service_title))
                 .SetContentText(Resources.GetString(Resource.String.step_sensor_service_content))
                 .SetSmallIcon(Resource.Drawable.xamarin_logo)
-                //.SetContentIntent(intent)
                 .SetOngoing(true)
                 .Build()) {
                 //Enlist this instance of the service as a foreground service
@@ -91,14 +85,12 @@ namespace Wandor.Droid.Services
             Log.Debug(TAG, "RegisterListener");
 
             _sensorManager.RegisterListener(_stepCounterSensorEventListener, _stepCounterSensor, SensorDelay.Fastest);
-            //_sensorManager.RegisterListener(_stepDetectorSensorEventListener, _stepDetectorSensor, SensorDelay.Fastest);
         }
 
         private void UnregisterListener() {
             Log.Debug(TAG, "UnregisterListener");
 
             _sensorManager.UnregisterListener(_stepCounterSensorEventListener);
-            //_sensorManager.UnregisterListener(_stepDetectorSensorEventListener);
         }
 
         private void RegisterNotificationChannel() {
