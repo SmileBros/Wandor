@@ -9,12 +9,12 @@ namespace Wandor.Droid.Crosses
 
         public void OnServiceConnected(ComponentName name, IBinder service) {
             if (service is StepSensorServiceBinder binder) {
-                StepService.Wrap(binder.StepService);
+                StepService?.Wrap(binder.StepService);
             }
         }
 
         public void OnServiceDisconnected(ComponentName name) {
-            StepService.UnWrap();
+            StepService?.UnWrap();
         }
     }
 }
