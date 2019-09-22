@@ -1,15 +1,17 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.Content;
 using Android.Hardware;
 using Android.OS;
 using Android.Runtime;
 using Wandor.Droid.Crosses;
 using Wandor.Droid.EventListeners;
+using Wandor.Services;
 
 namespace Wandor.Droid.Services
 {
     [Service]
-    public class StepSensorService : Service
+    public class StepSensorService : Service, IStepService
     {
         public const int ServiceRunningNotificationId = 10000;
         private const string ApplicationNotificationChannelId = "com.miehaha.wandor.NotificationChannel";
@@ -21,11 +23,21 @@ namespace Wandor.Droid.Services
         private StepCounterEventListener _stepCounterSensorEventListener;
         private StepSensorServiceBinder _binder;
 
+        #region IStepService
+
+        public event EventHandler<int> StepCountChanged;
+
+        public int StepCount { get; private set; }
+
+        #endregion
+
+        #region Lifecycle
+
         public override IBinder OnBind(Intent intent)
         {
             _binder = new StepSensorServiceBinder()
             {
-                StepService = _stepCounterSensorEventListener
+                StepService = this
             };
 
             return _binder;
@@ -33,7 +45,6 @@ namespace Wandor.Droid.Services
 
         public override bool OnUnbind(Intent intent)
         {
-            _stepCounterSensorEventListener.Save();
             return true;
         }
 
@@ -49,8 +60,8 @@ namespace Wandor.Droid.Services
             var sharedPreferences = GetSharedPreferences(SHARED_PREFERENCES_FILENAME, FileCreationMode.Private);
 
             _sensorManager = (SensorManager)GetSystemService(SensorService);
-            _stepCounterSensor = _sensorManager.GetDefaultSensor(SensorType.StepCounter);//获取计步总数传感器
-            _stepCounterSensorEventListener = new StepCounterEventListener(sharedPreferences);
+            _stepCounterSensor = _sensorManager.GetDefaultSensor(SensorType.StepCounter);
+            _stepCounterSensorEventListener = new StepCounterEventListener(OnStepSensorChanged, sharedPreferences);
 
             RegisterNotificationChannel();
             RegisterSensorEventListener();
@@ -65,6 +76,19 @@ namespace Wandor.Droid.Services
         public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
         {
             return base.OnStartCommand(intent, flags, startId);
+        }
+
+        public override void OnDestroy()
+        {
+            UnregisterSensorEventListener();
+            Save();
+            base.OnDestroy();
+        }
+
+        #endregion
+
+        private void Save()
+        {
         }
 
         private void StartAsForeground()
@@ -83,23 +107,6 @@ namespace Wandor.Droid.Services
             }
         }
 
-        public override void OnDestroy()
-        {
-            UnregisterListener();
-            base.OnDestroy();
-        }
-
-        private void RegisterSensorEventListener()
-        {
-            _sensorManager.RegisterListener(_stepCounterSensorEventListener, _stepCounterSensor, SensorDelay.Fastest);
-        }
-
-        private void UnregisterListener()
-        {
-            _stepCounterSensorEventListener.Save();
-            _sensorManager.UnregisterListener(_stepCounterSensorEventListener);
-        }
-
         private void RegisterNotificationChannel()
         {
             var manager = (NotificationManager)GetSystemService(NotificationService);
@@ -113,6 +120,26 @@ namespace Wandor.Droid.Services
                 channel.EnableVibration(false);
                 manager.CreateNotificationChannel(channel);
             }
+        }
+
+        private void RegisterSensorEventListener()
+        {
+            _sensorManager.RegisterListener(_stepCounterSensorEventListener, _stepCounterSensor, SensorDelay.Fastest);
+        }
+
+        private void UnregisterSensorEventListener()
+        {
+            _sensorManager.UnregisterListener(_stepCounterSensorEventListener);
+        }
+
+
+        private void OnStepSensorChanged(int value)
+        {
+        }
+
+        private void OnStepCountChanged(int value)
+        {
+            StepCountChanged?.Invoke(this, value);
         }
     }
 }
