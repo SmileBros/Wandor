@@ -69,8 +69,6 @@ namespace Wandor.Droid.Services
         [return: GeneratedEnum]
         public override StartCommandResult OnStartCommand(Intent intent, [GeneratedEnum] StartCommandFlags flags, int startId)
         {
-            Log.Debug(TAG, "OnStartCommand");
-
             return base.OnStartCommand(intent, flags, startId);
         }
 
