@@ -8,7 +8,7 @@ namespace Wandor.Services
 {
     public class MockDataStore : IDataStore<Item>
     {
-        List<Item> items;
+        private readonly List<Item> items;
 
         public MockDataStore()
         {

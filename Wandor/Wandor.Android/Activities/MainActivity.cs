@@ -17,7 +17,8 @@ namespace Wandor.Droid.Activities
         private AndroidInitializer _initializer;
         private StepSensorServiceConnection _connection;
 
-        protected override void OnCreate(Bundle savedInstanceState) {
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
             base.OnCreate(savedInstanceState);
@@ -27,38 +28,48 @@ namespace Wandor.Droid.Activities
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             Forms.Init(this, savedInstanceState);
             LoadApplication(new App(_initializer));
+
         }
 
-        private void Initialize() {
-            _initializer = new AndroidInitializer {
+        private void Initialize()
+        {
+            _initializer = new AndroidInitializer
+            {
                 StepService = new StepService(),
             };
         }
 
-        protected override void OnStart() {
+        protected override void OnStart()
+        {
             base.OnStart();
 
             _isStepSensorAvaliable =
                 PackageManager.HasSystemFeature(PackageManager.FeatureSensorStepCounter)
                 && PackageManager.HasSystemFeature(PackageManager.FeatureSensorStepDetector);
 
-            if (_isStepSensorAvaliable) {
+            if (_isStepSensorAvaliable)
+            {
                 BindStepSensorService();
             }
         }
 
-        protected override void OnStop() {
+        protected override void OnStop()
+        {
             UnbindStepSensorService();
             base.OnStop();
         }
 
-        private Intent CreateStepSensorServiceIntent() {
+        private Intent CreateStepSensorServiceIntent()
+        {
             return new Intent(this, typeof(StepSensorService));
         }
 
-        private void BindStepSensorService() {
-            if (_connection == null) {
-                _connection = new StepSensorServiceConnection {
+        private void BindStepSensorService()
+        {
+            if (_connection == null)
+            {
+                _connection = new StepSensorServiceConnection
+                {
                     StepService = _initializer.StepService,
                 };
             }
@@ -67,15 +78,18 @@ namespace Wandor.Droid.Activities
             BindService(intent, _connection, Bind.AutoCreate);
         }
 
-        private void UnbindStepSensorService() {
-            if (_connection != null) {
+        private void UnbindStepSensorService()
+        {
+            if (_connection != null)
+            {
                 UnbindService(_connection);
             }
         }
 
         public override void OnRequestPermissionsResult(int requestCode,
                                                         string[] permissions,
-                                                        [GeneratedEnum] Permission[] grantResults) {
+                                                        [GeneratedEnum] Permission[] grantResults)
+        {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);

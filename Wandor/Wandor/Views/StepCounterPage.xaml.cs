@@ -4,7 +4,8 @@ namespace Wandor.Views
 {
     public partial class StepCounterPage : ContentPage
     {
-        public StepCounterPage() {
+        public StepCounterPage()
+        {
             InitializeComponent();
         }
     }

@@ -8,34 +8,41 @@ namespace Wandor.ViewModels
         protected INavigationService NavigationService { get; private set; }
 
         private string _title;
-        public string Title {
+        public string Title
+        {
             get => _title;
             set => SetProperty(ref _title, value);
         }
 
         private bool _isBusy = false;
-        public bool IsBusy {
+        public bool IsBusy
+        {
             get => _isBusy;
             set => SetProperty(ref _isBusy, value);
         }
 
-        public ViewModelBase(INavigationService navigationService) {
+        public ViewModelBase(INavigationService navigationService)
+        {
             NavigationService = navigationService;
         }
 
-        public virtual void OnNavigatedFrom(INavigationParameters parameters) {
+        public virtual void OnNavigatedFrom(INavigationParameters parameters)
+        {
 
         }
 
-        public virtual void OnNavigatedTo(INavigationParameters parameters) {
+        public virtual void OnNavigatedTo(INavigationParameters parameters)
+        {
 
         }
 
-        public virtual void OnNavigatingTo(INavigationParameters parameters) {
+        public virtual void OnNavigatingTo(INavigationParameters parameters)
+        {
 
         }
 
-        public virtual void Destroy() {
+        public virtual void Destroy()
+        {
 
         }
     }

@@ -7,13 +7,16 @@ namespace Wandor.Droid.Crosses
     {
         public StepService StepService { get; set; }
 
-        public void OnServiceConnected(ComponentName name, IBinder service) {
-            if (service is StepSensorServiceBinder binder) {
+        public void OnServiceConnected(ComponentName name, IBinder service)
+        {
+            if (service is StepSensorServiceBinder binder)
+            {
                 StepService?.Wrap(binder.StepService);
             }
         }
 
-        public void OnServiceDisconnected(ComponentName name) {
+        public void OnServiceDisconnected(ComponentName name)
+        {
             StepService?.UnWrap();
         }
     }

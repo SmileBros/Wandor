@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Wandor.Models
+﻿namespace Wandor.Models
 {
     public class Item
     {

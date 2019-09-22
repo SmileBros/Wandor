@@ -8,7 +8,8 @@ namespace Wandor.Droid.Crosses
     {
         public StepService StepService { get; set; }
 
-        public void RegisterTypes(IContainerRegistry containerRegistry) {
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
             // Register any platform specific implementations
             containerRegistry.RegisterInstance<IStepService>(StepService);
         }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.ComponentModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
+﻿using System.ComponentModel;
 using Wandor.Models;
 using Wandor.ViewModels;
+using Xamarin.Forms;
 
 namespace Wandor.Views
 {
@@ -19,7 +16,7 @@ namespace Wandor.Views
         {
             InitializeComponent();
 
-            BindingContext = this._viewModel = viewModel;
+            BindingContext = _viewModel = viewModel;
         }
 
         public ItemDetailPage()

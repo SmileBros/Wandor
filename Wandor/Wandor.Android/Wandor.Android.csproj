@@ -81,7 +81,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="EventListeners\StepCounterEventListener.cs" />
-    <Compile Include="EventListeners\StepDetectorEventListener.cs" />
     <Compile Include="Services\StepSensorService.cs" />
   </ItemGroup>
   <ItemGroup>

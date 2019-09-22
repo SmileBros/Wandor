@@ -30,10 +30,12 @@ namespace Wandor.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Item> GetItem(string id)
         {
-            Item item = ItemRepository.Get(id);
+            var item = ItemRepository.Get(id);
 
             if (item == null)
+            {
                 return NotFound();
+            }
 
             return item;
         }
@@ -68,10 +70,12 @@ namespace Wandor.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Delete(string id)
         {
-            Item item = ItemRepository.Remove(id);
+            var item = ItemRepository.Remove(id);
 
             if (item == null)
+            {
                 return NotFound();
+            }
 
             return Ok();
         }

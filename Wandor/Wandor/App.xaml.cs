@@ -2,7 +2,6 @@
 using Prism.Ioc;
 using Prism.Unity;
 using Wandor.Services;
-using Wandor.ViewModels;
 using Wandor.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -22,39 +21,49 @@ namespace Wandor
 
         public App(IPlatformInitializer initializer) : base(initializer) { }
 
-        protected override void OnStart() {
+        protected override void OnStart()
+        {
             // Handle when your app starts
         }
 
-        protected override void OnSleep() {
+        protected override void OnSleep()
+        {
             // Handle when your app sleeps
         }
 
-        protected override void OnResume() {
+        protected override void OnResume()
+        {
             // Handle when your app resumes
         }
 
-        protected override void RegisterTypes(IContainerRegistry container) {
+        protected override void RegisterTypes(IContainerRegistry container)
+        {
             RegisterServices(container);
 
             RegisterViews(container);
         }
 
-        private static void RegisterServices(IContainerRegistry container) {
-            if (UseMockDataStore) {
+        private static void RegisterServices(IContainerRegistry container)
+        {
+            if (UseMockDataStore)
+            {
                 container.Register<MockDataStore>();
-            } else {
+            }
+            else
+            {
                 container.Register<AzureDataStore>();
             }
         }
 
-        private static void RegisterViews(IContainerRegistry container) {
+        private static void RegisterViews(IContainerRegistry container)
+        {
             container.RegisterForNavigation<NavigationPage>();
             container.RegisterForNavigation<MainPage>();
             container.RegisterForNavigation<StepCounterPage>();
         }
 
-        protected override async void OnInitialized() {
+        protected override async void OnInitialized()
+        {
             InitializeComponent();
 
             var result = await NavigationService.NavigateAsync("NavigationPage/MainPage");

@@ -1,5 +1,4 @@
 ﻿using System;
-using Wandor.Events;
 
 namespace Wandor.Services
 {

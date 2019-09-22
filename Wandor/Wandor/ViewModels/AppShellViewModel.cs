@@ -4,7 +4,8 @@ namespace Wandor.ViewModels
 {
     public class AppShellViewModel : ViewModelBase
     {
-        public AppShellViewModel(INavigationService navigationService) : base(navigationService) {
+        public AppShellViewModel(INavigationService navigationService) : base(navigationService)
+        {
             Title = "AppShell";
         }
     }

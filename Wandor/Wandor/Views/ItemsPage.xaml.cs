@@ -1,7 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using Wandor.Models;
-using Wandor.ViewModels;
 using Xamarin.Forms;
 
 namespace Wandor.Views
@@ -13,11 +11,13 @@ namespace Wandor.Views
     {
         //private ItemsPageViewModel ViewModel => BindingContext as ItemsPageViewModel;
 
-        public ItemsPage() {
+        public ItemsPage()
+        {
             InitializeComponent();
         }
 
-        private async void OnItemSelected(object sender, SelectedItemChangedEventArgs args) {
+        private async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
+        {
             //if (!(args.SelectedItem is Item item))
             //    return;
 
@@ -27,11 +27,13 @@ namespace Wandor.Views
             //ItemsListView.SelectedItem = null;
         }
 
-        private async void AddItem_Clicked(object sender, EventArgs e) {
+        private async void AddItem_Clicked(object sender, EventArgs e)
+        {
             //await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
         }
 
-        protected override void OnAppearing() {
+        protected override void OnAppearing()
+        {
             base.OnAppearing();
 
             //if (ViewModel.Items.Count == 0)

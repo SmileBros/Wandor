@@ -11,19 +11,23 @@ namespace Wandor.Droid.Crosses
 
         public event EventHandler<int> StepCountChanged;
 
-        public void Wrap(IStepService stepService) {
+        public void Wrap(IStepService stepService)
+        {
             UnWrap();
             _stepService = stepService;
             _stepService.StepCountChanged += OnStepCountChanged;
             OnStepCountChanged(this, StepCount);
         }
 
-        private void OnStepCountChanged(object sender, int e) {
+        private void OnStepCountChanged(object sender, int e)
+        {
             StepCountChanged?.Invoke(sender, e);
         }
 
-        public void UnWrap() {
-            if (_stepService != null) {
+        public void UnWrap()
+        {
+            if (_stepService != null)
+            {
                 _stepService.StepCountChanged -= OnStepCountChanged;
             }
         }
