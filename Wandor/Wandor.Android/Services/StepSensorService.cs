@@ -61,7 +61,7 @@ namespace Wandor.Droid.Services
 
             _sensorManager = (SensorManager)GetSystemService(SensorService);
             _stepCounterSensor = _sensorManager.GetDefaultSensor(SensorType.StepCounter);
-            _stepCounterSensorEventListener = new StepCounterEventListener(OnStepSensorChanged, sharedPreferences);
+            _stepCounterSensorEventListener = new StepCounterEventListener(OnStepCountChanged, sharedPreferences);
 
             RegisterNotificationChannel();
             RegisterSensorEventListener();
@@ -133,11 +133,12 @@ namespace Wandor.Droid.Services
         }
 
 
-        private void OnStepSensorChanged(int value)
+        private void OnStepCountChanged(int value)
         {
+            InvokeStepCountChanged(value);
         }
 
-        private void OnStepCountChanged(int value)
+        private void InvokeStepCountChanged(int value)
         {
             StepCountChanged?.Invoke(this, value);
         }
