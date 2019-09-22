@@ -3,7 +3,6 @@ using Android.Content;
 using Android.Hardware;
 using Android.OS;
 using Android.Runtime;
-using Android.Util;
 using Wandor.Droid.Crosses;
 using Wandor.Droid.EventListeners;
 
@@ -17,8 +16,6 @@ namespace Wandor.Droid.Services
 
         private const string SHARED_PREFERENCES_FILENAME = "StepPreferences";
 
-        private const string TAG = "StepService";
-
         private SensorManager _sensorManager;
         private Sensor _stepCounterSensor;
         private StepCounterEventListener _stepCounterSensorEventListener;
@@ -26,8 +23,6 @@ namespace Wandor.Droid.Services
 
         public override IBinder OnBind(Intent intent)
         {
-            Log.Info(TAG, "OnBind");
-
             _binder = new StepSensorServiceBinder()
             {
                 StepService = _stepCounterSensorEventListener
@@ -96,15 +91,11 @@ namespace Wandor.Droid.Services
 
         private void RegisterSensorEventListener()
         {
-            Log.Debug(TAG, "RegisterListener");
-
             _sensorManager.RegisterListener(_stepCounterSensorEventListener, _stepCounterSensor, SensorDelay.Fastest);
         }
 
         private void UnregisterListener()
         {
-            Log.Debug(TAG, "UnregisterListener");
-
             _stepCounterSensorEventListener.Save();
             _sensorManager.UnregisterListener(_stepCounterSensorEventListener);
         }
